@@ -47,6 +47,7 @@ async function run() {
     try {
         const CategoriesCollection = client.db('phone-garage').collection('categories')
         const AllPhonesData = client.db('phone-garage').collection('phones-data')
+        const PhoneBookingsCollection = client.db('phone-garage').collection('phone-Bookings');
         const usersCollection = client.db('phone-garage').collection('users');
 
         //All Categories Phones data read
@@ -63,6 +64,31 @@ async function run() {
             // console.log(query)
             const result = await cursor.toArray();
             res.send(result)
+        })
+
+        //Create Bookings
+        app.post('/phonebookings', async (req, res) => {
+            const query = {
+                Model: req.body.Model
+
+            }
+
+            const alreadyBooked = await PhoneBookingsCollection.find(query).toArray();
+            if (alreadyBooked.length) {
+                return res.send({
+                    success: false,
+                    message: `You already have a purchase of ${req.body.Model}`
+                })
+            }
+
+            const result = await PhoneBookingsCollection.insertOne(req.body);
+            res.send({
+                success: true,
+                message: 'Booking Confirmed!',
+                data: result
+            })
+
+
         })
 
         //Create user and save to database 
