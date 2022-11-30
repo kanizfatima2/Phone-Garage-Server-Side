@@ -109,11 +109,7 @@ async function run() {
             res.status(403).send({ accessToken: '' })
         });
 
-        //Get all Users in Dashboard
-        app.get('/users', async (req, res) => {
-            const users = await usersCollection.find({}).toArray();
-            res.send(users)
-        })
+
 
     }
 
