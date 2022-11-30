@@ -125,7 +125,7 @@ async function run() {
 run().catch(err => console.error(err))
 
 app.get('/', (req, res) => {
-    res.send('Phone-Garage is Running')
+    res.send(' is Running')
 })
 app.listen(port, (req, res) => {
     console.log('Listening to port ', port)
